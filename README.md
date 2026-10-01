@@ -1,5 +1,7 @@
 # krsmApp-ver1.01
 自分で現在のコードの問題点を認識するために変更点を再整理するためのもの。
+# 整理項目
+初めに開くwindowを```Selectview```にすることで初めに管理者側のログインとお客様のログインで分ける。
 ```
 import SwiftUI
 import SwiftData
@@ -13,7 +15,7 @@ struct KrsmaApp:App{
     }
 }
 ```
-初めに開くwindowを```Selectview```にすることで初めに管理者側のログインとお客様のログインで分ける。
+データ設計として永続していきたい運営者側の設定とお客様の予約を作る必要があり運営側の設定を追加していきたい。
 ```
 //データ設計
 @Model
@@ -28,7 +30,7 @@ class Reservation{
     }
 }
 ```
-データ設計として永続していきたい運営者側の設定とお客様の設定を
+```@Environment(\.dismiss) private var dismiss```の部分は元画面を消して次のページを新しく開くようにしたいがページ変容をする際にこれが必要なのかは理解不足。
 ```
 //利用者選択画面
 struct SelectView:View{
@@ -50,6 +52,12 @@ struct SelectView:View{
         }
     }
 }
+```
+こちらのログイン画面も同様に```@Environment(\.dismiss) private var dismiss```理解不足。
+コード内で```MusterPassWord```を変えればパスワードを変更できる。
+```MusterView(records:$records)```で予約データを```records```として送る。
+※```records```の内容を再度理解する。
+```
 //管理者ログイン画面
 struct MusterPassView:View{
     @Environment(\.dismiss) private var dismiss
