@@ -77,6 +77,31 @@ struct MusterPassView:View{
         }
     }
 }
+```
+```@Query,let```などの定義や使い方の理解が低い。
+
+```startTime```の部分で値を入力することで始業時間を設定。
+
+```holiday```で休日を入力。
+
+```
+DatePicker(
+                "予約者日付検索",
+                selection:$reserti,
+                in:Date()...,
+                displayedComponents:[.date]
+            )
+            .datePickerStyle(.graphical)
+```
+```DatePicker```で予約者の有無を確認したい日を選択。
+```
+Button("検索"){
+                showResult=true
+            }
+            if showResult == ture{
+```
+
+```
 //管理者編集画面
 struct MusterView:View{
     let records:[Reservation]
