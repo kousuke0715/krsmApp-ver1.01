@@ -30,7 +30,7 @@ class Reservation{
     }
 }
 ```
-```@Environment(\.dismiss) private var dismiss```の部分は元画面を消して次のページを新しく開くようにしたいがページ変容をする際にこれが必要なのかは理解不足。
+```@Environment(\.dismiss) private var dismiss```の部分は元画面を消して次のページを新しく開くようにしたがページ変容をする際にこれが必要なのかは理解不足。
 ```
 //利用者選択画面
 struct SelectView:View{
@@ -54,8 +54,11 @@ struct SelectView:View{
 }
 ```
 こちらのログイン画面も同様に```@Environment(\.dismiss) private var dismiss```理解不足。
+
 コード内で```MusterPassWord```を変えればパスワードを変更できる。
+
 ```MusterView(records:$records)```で予約データを```records```として送る。
+
 ※```records```の内容を再度理解する。
 ```
 //管理者ログイン画面
