@@ -100,7 +100,16 @@ Button("検索"){
             }
             if showResult == ture{
 ```
+```Button```をtrueにすることで検索欄を出力。検索後にはfalseにするべきかも。
+```
+ List{
+                    ForEach(records){reservation in
+                        if reservation.dateTime == reserti{
+                            Text("予約時間:\(reservation.dateTime) 名前:\(reservation.name) カット:\(reservation.cut)")
+```
+いつも通りの```List ForEach```で動かす。if文のreservation.datetimeとresertiが一致すれば出力する。
 
+ここで書いてあるようにdatetimeこの中には日だけをまとめもう一つ```time何とか```とか適当に変数名を決め時間を保持するものを作りたいが時間のみにまとめると他の曜日でも時間が出力される気がしている。
 ```
 //管理者編集画面
 struct MusterView:View{
@@ -138,9 +147,38 @@ struct MusterView:View{
         }
     }
 }
+```
+```Date()```という型名にすると日と時間をまとめられる時間となる。
+```
+var isBooked:Bool{
+        records.contains{reservation in
+            Calendar.current.isDate(
+                reservation.dateTime,
+                equalTo:selectedDate,
+                toGranularity:.minute
+            )
+```
+で```isBooked```の型名を```Bool```つまりtrue,falseのみを使える方にする。
 
-            
+```reseavation.datetime```をfor文の感覚で全部比較していく。
 
+自身が選択した```selectedDate```をつまり曜日と比較する。のちに出てくる```toGranularity:.minute```で分も比較するという部分を定義しているが```selectiedDate```の部分では日だけを出すとかんがえているのでminuteとの比較は消す。
+```
+NavigationStack{
+            //日時選択
+            DatePicker(
+                "日付を選択",
+                selection:$selectedDate,
+                in:Date()...,
+                displayedComponents:[.date]
+            )
+            .datePickerStyle(.graphical)
+            NavigationLink("時間選択"){
+                DetailhmView(selectedDate:selectedDate)
+            }
+```
+ここでは```DatePicker```で日を選択できるようにする。時間は```NavigationLink```の時間選択ボタンを押すと向こうの画面で時間を選択する。
+```
 //利用者予約日時画面
 struct ContentView:View{
     @Query private var records:[Reservation]
@@ -191,7 +229,10 @@ struct ContentView:View{
         .padding()
     }
 }
+```
+```@State private var resevationtime=Date()```ここで時間を定義しているがこれを```Model```の部分で定義する必要があると思う。
 
+```
 struct DetailHourMinView:View{
     let selectedDate:Date
     @Environment(\.dismiss) private var dismiss
@@ -237,10 +278,11 @@ struct DetailHourMinView:View{
                 displayedComponents:[.hourAndMinute]
             )
         }
+```
 
 
 
-
+```
 struct CutDetailSelectView: View {
     // 前の画面から受け取った日時
     let selectedDate: Date
